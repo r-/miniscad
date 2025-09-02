@@ -25,6 +25,7 @@ miniscad/
 ├── /examples           # Example design scripts
 │   ├── dice.js
 │   ├── wheel.js
+│   ├── keytag.js
 │   └── bitbeam.js
 ├── /docs               # Documentation & guides
 │   ├── README.md       # (this file)
@@ -73,4 +74,5 @@ A cube with a cylindrical hole through it.
 
 ## 📜 License
 MIT — free to use, share, and modify.
+
 
