@@ -65,14 +65,15 @@ A cube with a cylindrical hole through it.
 
 ---
 
-## 📘 Documentation
+## Documentation
 - [Getting Started](docs/getting-started.md)  
 - [Examples](docs/examples.md)  
 - [Architecture](docs/architecture.md) *(optional if you add one)*
 
 ---
 
-## 📜 License
+## License
 MIT — free to use, share, and modify.
+
 
 
