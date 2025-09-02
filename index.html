@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MiniScad</title>
+  <style>
+    html, body { margin:0; height:100%; overflow:hidden; font-family:sans-serif; }
+    #header { height:40px; background:#333; color:#fff; display:flex; align-items:center; padding:0 10px; }
+    #header h1 { flex:1; font-size:16px; margin:0; }
+    #header button, #header input { margin-left:10px; }
+    #container { display:flex; height:calc(100% - 40px); }
+    #editor { width:40%; height:100%; box-sizing:border-box; padding:10px; background:#222; color:#eee; display:flex; flex-direction:column; }
+    #editor textarea { flex:1; width:100%; background:#111; color:#0f0; font-family:monospace; font-size:14px; margin-bottom:5px; }
+    #editor button { width:100%; padding:10px; margin-bottom:5px; font-size:16px; }
+    #console { flex:0.3; background:#000; color:#0f0; font-family:monospace; font-size:13px; overflow-y:auto; padding:5px; }
+    #viewer { flex:1; height:100%; }
+    canvas { width:100%; height:100%; display:block; }
+  </style>
+</head>
+<body>
+  <div id="header">
+    <h1>MiniScad</h1>
+    <input type="file" id="fileInput" accept=".js" style="display:none">
+    <button id="uploadBtn">Upload</button>
+    <button id="exportBtn">Export STL</button>
+  </div>
+  <div id="container">
+    <div id="editor">
+      <textarea id="code">
+// Example: cube with hole
+function main() {
+  const { cube, cylinder } = jscadModeling.primitives
+  const { subtract } = jscadModeling.booleans
+  const { translate } = jscadModeling.transforms
+
+  const body = cube({ size: 40 })
+  const hole = translate([20,20,-10], cylinder({ height: 60, radius: 10 }))
+  return subtract(body, hole)
+}
+      </textarea>
+      <button id="run">▶ Run</button>
+      <div id="console"></div>
+    </div>
+    <div id="viewer"><canvas id="view"></canvas></div>
+  </div>
+
+  <!-- JSCAD libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@jscad/modeling@2.12.5/dist/jscad-modeling.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@jscad/regl-renderer@2.6.12/dist/jscad-regl-renderer.min.js"></script>
+
+  <!-- MiniScad modules -->
+  <script src="src/lib/stl-exporter.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>
