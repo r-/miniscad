@@ -1,11 +1,11 @@
-# 🟩 MiniScad
+# MiniScad
 
 > A lightweight, browser-based CAD playground inspired by OpenSCAD.  
 > Write code → see 3D shapes → export STL. No install required.
 
 ---
 
-## ✨ Features
+## Features
 - Code editor + live 3D viewer (WebGL powered with JSCAD renderer).
 - Based on **JSCAD modeling primitives** (cube, sphere, cylinder, etc).
 - Upload your own `.js` design files into the editor.
@@ -35,7 +35,7 @@ miniscad/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 1. Clone or download this repository.  
 2. Open `index.html` in your browser (no server required).  
 3. Start coding in the left editor panel.  
@@ -44,7 +44,7 @@ miniscad/
 
 ---
 
-## 📖 Example
+## Example
 
 **Code:**
 ```js
@@ -73,3 +73,4 @@ A cube with a cylindrical hole through it.
 
 ## 📜 License
 MIT — free to use, share, and modify.
+
