@@ -11,6 +11,7 @@ let distance = 150;
 let azimuth = 0;
 let elevation = 0;
 let target = [0, 0, 0];
+let currentFilename = 'design.js';
 
 /**
  * Initialize the 3D viewer and camera
@@ -199,6 +200,7 @@ function setupFileUpload() {
   fileInput.onchange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    currentFilename = file.name || currentFilename;
     
     const reader = new FileReader();
     reader.onload = (ev) => {
@@ -235,6 +237,50 @@ function setupSTLExport() {
 }
 
 /**
+ * Setup Save-to-file functionality for editor code
+ * Uses File System Access API when available, falls back to download
+ */
+function setupSave() {
+  const saveBtn = document.getElementById('saveBtn');
+
+  async function saveCode() {
+    const code = document.getElementById('code').value;
+
+    // Try modern save picker first (Chromium, secure context)
+    if (window.showSaveFilePicker) {
+      try {
+        const handle = await window.showSaveFilePicker({
+          suggestedName: currentFilename || 'design.js',
+          types: [{ description: 'JavaScript Files', accept: { 'text/javascript': ['.js'] } }]
+        });
+        const writable = await handle.createWritable();
+        await writable.write(code);
+        await writable.close();
+        // Remember chosen filename if possible
+        try {
+          if (handle.name) currentFilename = handle.name;
+        } catch (_) { /* ignore */ }
+        return;
+      } catch (err) {
+        // Ignore user-cancel; log other errors
+        if (!(err && err.name === 'AbortError')) console.error(err);
+      }
+    }
+
+    // Fallback: trigger a download
+    const blob = new Blob([code], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = currentFilename || 'design.js';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  saveBtn.onclick = () => { saveCode(); };
+}
+
+/**
  * Initialize the application
  */
 function initApp() {
@@ -248,6 +294,7 @@ function initApp() {
   setupConsole();
   setupFileUpload();
   setupSTLExport();
+  setupSave();
   
   // Setup run button
   document.getElementById('run').onclick = runCode;
